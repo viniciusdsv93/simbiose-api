@@ -1,12 +1,11 @@
 package com.crudapi.crud.controllers;
 
+import com.crudapi.crud.controllers.DTO.PersonCreateDTO;
+import com.crudapi.crud.controllers.mapper.PersonMapper;
 import com.crudapi.crud.entities.Person;
 import com.crudapi.crud.services.PersonService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,8 +24,9 @@ public class PersonController {
     return ResponseEntity.ok().body(personList);
   }
 
-  @PostMapping(value = "/pessoa/{id}")
-  public String insertNewPerson(@PathVariable String id) {
-    return String.format("Pessoa de id %s criada", id);
+  @PostMapping
+  public ResponseEntity<Person> create(@RequestBody PersonCreateDTO personCreateDTO) {
+    var person = PersonMapper.fromPersonCreateToPerson(personCreateDTO);
+    return null;
   }
 }
