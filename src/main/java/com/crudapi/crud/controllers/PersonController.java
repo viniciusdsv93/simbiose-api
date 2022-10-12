@@ -3,7 +3,6 @@ package com.crudapi.crud.controllers;
 import com.crudapi.crud.controllers.DTO.PersonCreateDTO;
 import com.crudapi.crud.controllers.DTO.PersonDTO;
 import com.crudapi.crud.controllers.mapper.PersonMapper;
-import com.crudapi.crud.entities.Person;
 import com.crudapi.crud.services.PersonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +24,17 @@ public class PersonController {
   }
 
   @GetMapping(value = "/pessoas")
-  public ResponseEntity<List<Person>> findAll() {
-    List<Person> personList = personService.findAll();
-    return ResponseEntity.ok().body(personList);
+  public ResponseEntity<List<PersonDTO>> findAll() {
+    var personList = personService.findAll();
+    var personDTOList = PersonMapper.fromPersonToPersonDTOList(personList);
+    return ResponseEntity.ok().body(personDTOList);
   }
 
   @PostMapping(value = "/pessoa")
   public ResponseEntity<PersonDTO> create(@RequestBody PersonCreateDTO personCreateDTO) {
     var person = PersonMapper.fromPersonCreateToPerson(personCreateDTO);
     var createdPerson = personService.create(person);
+    System.out.println("createdPerson " + createdPerson.toString());
     var createdDto = PersonMapper.fromPersonToPersonDTO(createdPerson);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdDto.getId()).toUri();
     return ResponseEntity.created(uri).body(createdDto);
