@@ -34,7 +34,6 @@ public class PersonController {
   public ResponseEntity<PersonDTO> create(@RequestBody PersonCreateDTO personCreateDTO) {
     var person = PersonMapper.fromPersonCreateToPerson(personCreateDTO);
     var createdPerson = personService.create(person);
-    System.out.println("createdPerson " + createdPerson.toString());
     var createdDto = PersonMapper.fromPersonToPersonDTO(createdPerson);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdDto.getId()).toUri();
     return ResponseEntity.created(uri).body(createdDto);

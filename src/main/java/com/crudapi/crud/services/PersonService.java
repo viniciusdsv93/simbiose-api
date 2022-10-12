@@ -26,9 +26,17 @@ public class PersonService {
   }
 
   public Person create(Person person) {
-    String uuid = getUUID();
-    person.setId(uuid);
-    personRepository.save(person);
-    return person;
+    if (personRepository.findByEmail(person.getEmail()) == null) {
+      String uuid = getUUID();
+      person.setId(uuid);
+      personRepository.save(person);
+      System.out.println("email disponível");
+      return person;
+    }
+    else {
+      //todo implement throw error
+      System.out.println("email já em uso");
+      return person;
+    }
   }
 }
