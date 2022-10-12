@@ -17,10 +17,10 @@ public class Person implements Serializable {
   @Id
   private String id;
 
-  @Column(name = "nome", length = 100, nullable = false)
+  @Column(name = "nome", length = 100)
   private String name;
 
-  @Column(name = "email", length = 150, nullable = false)
+  @Column(name = "email", length = 150)
   private String email;
 
   @Column(name = "data_nascimento", columnDefinition = "DATE")

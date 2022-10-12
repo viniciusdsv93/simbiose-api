@@ -5,6 +5,7 @@ import com.crudapi.crud.repositories.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PersonService {
@@ -15,8 +16,19 @@ public class PersonService {
     this.personRepository = personRepository;
   }
 
+  private String getUUID() {
+    return UUID.randomUUID().toString().replace("-", "");
+  }
+
   public List<Person> findAll() {
     List<Person> personList = personRepository.findAll();
     return personList;
+  }
+
+  public Person create(Person person) {
+    String uuid = getUUID();
+    person.setId(uuid);
+    personRepository.save(person);
+    return person;
   }
 }

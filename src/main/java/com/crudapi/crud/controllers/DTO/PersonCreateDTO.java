@@ -1,11 +1,17 @@
 package com.crudapi.crud.controllers.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDate;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonCreateDTO {
 
   private String name;
   private String email;
+
+  @JsonFormat(pattern = "dd/MM/yyyy")
   private LocalDate birthday;
 
   public String getName() {
