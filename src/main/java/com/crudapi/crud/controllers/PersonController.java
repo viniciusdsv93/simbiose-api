@@ -43,6 +43,7 @@ public class PersonController {
   }
 
   @GetMapping(value = "/pessoa/{id}")
+  @ApiOperation("Encontrar uma pessoa específica")
   public ResponseEntity<PersonDTO> findById(@PathVariable String id) {
     Person person = personService.findById(id);
     var personDto = PersonMapper.fromPersonToPersonDTO(person);
@@ -50,8 +51,17 @@ public class PersonController {
   }
 
   @DeleteMapping(value = "/pessoa/{id}")
+  @ApiOperation("Deletar uma pessoa")
   public ResponseEntity<Void> delete(@PathVariable String id) {
     personService.delete(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping(value = "/pessoa/{id}")
+  @ApiOperation("Alterar dados de uma pessoa")
+  public ResponseEntity<PersonDTO> update(@PathVariable String id, @RequestBody PersonCreateDTO personCreateDTO) {
+    Person modifiedPerson = personService.update(id, personCreateDTO);
+    PersonDTO modifiedPersonDto = PersonMapper.fromPersonToPersonDTO(modifiedPerson);
+    return ResponseEntity.ok().body(modifiedPersonDto);
   }
 }

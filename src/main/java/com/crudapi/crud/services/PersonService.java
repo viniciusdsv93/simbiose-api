@@ -1,5 +1,6 @@
 package com.crudapi.crud.services;
 
+import com.crudapi.crud.controllers.DTO.PersonCreateDTO;
 import com.crudapi.crud.entities.Person;
 import com.crudapi.crud.repositories.PersonRepository;
 import com.crudapi.crud.services.exceptions.EmailAlreadyInUseException;
@@ -34,7 +35,6 @@ public class PersonService {
       String uuid = getUUID();
       person.setId(uuid);
       personRepository.save(person);
-      System.out.println("email disponível");
       return person;
     }
     else {
@@ -53,6 +53,20 @@ public class PersonService {
     }
     catch (EmptyResultDataAccessException e) {
       throw new PersonNotFoundException(id);
+    }
+  }
+
+  public Person update(String id, PersonCreateDTO personCreateDTO) {
+    Person person = findById(id);
+    if (personCreateDTO.getEmail().equals(person.getEmail()) || (!personCreateDTO.getEmail().equals(person.getEmail()) && personRepository.findByEmail(personCreateDTO.getEmail()) == null)) {
+      person.setName(personCreateDTO.getName());
+      person.setEmail(personCreateDTO.getEmail());
+      person.setBirthday(personCreateDTO.getBirthday());
+      personRepository.save(person);
+      return person;
+    }
+    else {
+      throw new EmailAlreadyInUseException(personCreateDTO.getEmail());
     }
   }
 }
