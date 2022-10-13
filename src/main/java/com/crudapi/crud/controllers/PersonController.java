@@ -4,6 +4,8 @@ import com.crudapi.crud.controllers.DTO.PersonCreateDTO;
 import com.crudapi.crud.controllers.DTO.PersonDTO;
 import com.crudapi.crud.controllers.mapper.PersonMapper;
 import com.crudapi.crud.services.PersonService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@Api(tags = "Controller de Pessoas")
 public class PersonController {
 
   private final PersonService personService;
@@ -24,6 +27,7 @@ public class PersonController {
   }
 
   @GetMapping(value = "/pessoas")
+  @ApiOperation("Buscar todas as pessoas")
   public ResponseEntity<List<PersonDTO>> findAll() {
     var personList = personService.findAll();
     var personDTOList = PersonMapper.fromPersonToPersonDTOList(personList);
@@ -31,6 +35,7 @@ public class PersonController {
   }
 
   @PostMapping(value = "/pessoa")
+  @ApiOperation("Cadastrar uma pessoa")
   public ResponseEntity<PersonDTO> create(@RequestBody PersonCreateDTO personCreateDTO) {
     var person = PersonMapper.fromPersonCreateToPerson(personCreateDTO);
     var createdPerson = personService.create(person);

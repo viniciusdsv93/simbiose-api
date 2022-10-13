@@ -2,6 +2,7 @@ package com.crudapi.crud.controllers.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDate;
 
