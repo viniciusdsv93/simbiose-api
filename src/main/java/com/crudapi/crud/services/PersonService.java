@@ -4,6 +4,7 @@ import com.crudapi.crud.entities.Person;
 import com.crudapi.crud.repositories.PersonRepository;
 import com.crudapi.crud.services.exceptions.EmailAlreadyInUseException;
 import com.crudapi.crud.services.exceptions.PersonNotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +45,14 @@ public class PersonService {
   public Person findById(String id) {
     Optional<Person> person = personRepository.findById(id);
     return person.orElseThrow(() -> new PersonNotFoundException(id));
+  }
+
+  public void delete(String id) {
+    try {
+      personRepository.deleteById(id);
+    }
+    catch (EmptyResultDataAccessException e) {
+      throw new PersonNotFoundException(id);
+    }
   }
 }

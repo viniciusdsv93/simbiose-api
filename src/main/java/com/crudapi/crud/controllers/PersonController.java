@@ -42,10 +42,16 @@ public class PersonController {
     return ResponseEntity.created(uri).body(createdDto);
   }
 
-  @GetMapping(value = "/pessoas/{id}")
+  @GetMapping(value = "/pessoa/{id}")
   public ResponseEntity<PersonDTO> findById(@PathVariable String id) {
     Person person = personService.findById(id);
     var personDto = PersonMapper.fromPersonToPersonDTO(person);
     return ResponseEntity.ok().body(personDto);
+  }
+
+  @DeleteMapping(value = "/pessoa/{id}")
+  public ResponseEntity<Void> delete(@PathVariable String id) {
+    personService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }
