@@ -2,6 +2,7 @@ package com.crudapi.crud.services;
 
 import com.crudapi.crud.entities.Person;
 import com.crudapi.crud.repositories.PersonRepository;
+import com.crudapi.crud.services.exceptions.EmailAlreadyInUseException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,9 +35,7 @@ public class PersonService {
       return person;
     }
     else {
-      //todo implement throw error
-      System.out.println("email já em uso");
-      return person;
+      throw new EmailAlreadyInUseException(person.getEmail());
     }
   }
 }
