@@ -3,9 +3,11 @@ package com.crudapi.crud.services;
 import com.crudapi.crud.entities.Person;
 import com.crudapi.crud.repositories.PersonRepository;
 import com.crudapi.crud.services.exceptions.EmailAlreadyInUseException;
+import com.crudapi.crud.services.exceptions.PersonNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,5 +39,10 @@ public class PersonService {
     else {
       throw new EmailAlreadyInUseException(person.getEmail());
     }
+  }
+
+  public Person findById(String id) {
+    Optional<Person> person = personRepository.findById(id);
+    return person.orElseThrow(() -> new PersonNotFoundException(id));
   }
 }
