@@ -24,6 +24,7 @@ public class PersonController {
     this.personService = personService;
   }
 
+  @CrossOrigin(origins = "*")
   @GetMapping(value = "/pessoas")
   @ApiOperation("Buscar todas as pessoas")
   public ResponseEntity<List<PersonDTO>> findAll() {
@@ -32,6 +33,7 @@ public class PersonController {
     return ResponseEntity.ok().body(personDTOList);
   }
 
+  @CrossOrigin(origins = "*")
   @PostMapping(value = "/pessoa")
   @ApiOperation("Cadastrar uma pessoa")
   public ResponseEntity<PersonDTO> create(@RequestBody PersonCreateDTO personCreateDTO) {
@@ -42,6 +44,7 @@ public class PersonController {
     return ResponseEntity.created(uri).body(createdDto);
   }
 
+  @CrossOrigin(origins = "*")
   @GetMapping(value = "/pessoa/{id}")
   @ApiOperation("Encontrar uma pessoa específica")
   public ResponseEntity<PersonDTO> findById(@PathVariable String id) {
@@ -50,6 +53,7 @@ public class PersonController {
     return ResponseEntity.ok().body(personDto);
   }
 
+  @CrossOrigin(origins = "*")
   @DeleteMapping(value = "/pessoa/{id}")
   @ApiOperation("Deletar uma pessoa")
   public ResponseEntity<Void> delete(@PathVariable String id) {
@@ -57,6 +61,7 @@ public class PersonController {
     return ResponseEntity.noContent().build();
   }
 
+  @CrossOrigin(origins = "*")
   @PutMapping(value = "/pessoa/{id}")
   @ApiOperation("Alterar dados de uma pessoa")
   public ResponseEntity<PersonDTO> update(@PathVariable String id, @RequestBody PersonCreateDTO personCreateDTO) {
